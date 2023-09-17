@@ -52,15 +52,15 @@ pub fn c_loop(input: TokenStream) -> TokenStream {
         fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
             let init: Expr = input.parse()?;
             
-            input.parse::<Token![,]>()?;
+            input.parse::<Token![;]>()?;
 
             let condinition: Expr = input.parse()?;
 
-            input.parse::<Token![,]>()?;
+            input.parse::<Token![;]>()?;
 
             let update_loop: Expr = input.parse()?;
 
-            input.parse::<Token![,]>()?;
+            input.parse::<Token![;]>()?;
 
             let update: Expr = input.parse()?;
             
@@ -86,7 +86,7 @@ pub fn c_loop(input: TokenStream) -> TokenStream {
 
             #update
 
-            #update_loop
+            #update_loop;
         }
     })
 }
