@@ -1,5 +1,4 @@
 use proc_macro::TokenStream;
-use syn::parse_macro_input;
 
 #[proc_macro]
 pub fn define(input: TokenStream) -> TokenStream {
@@ -40,6 +39,7 @@ pub fn define(input: TokenStream) -> TokenStream {
 pub fn c_loop(input: TokenStream) -> TokenStream {
     use syn::{Expr, parse::Parse, Token};
     use quote::quote;
+    use syn::parse_macro_input;
 
     struct CLoop {
         init: Expr,
