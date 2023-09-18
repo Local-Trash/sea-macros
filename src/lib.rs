@@ -37,12 +37,12 @@ pub fn define(input: TokenStream) -> TokenStream {
 
 #[proc_macro]
 pub fn c_loop(input: TokenStream) -> TokenStream {
-    use syn::{Expr, parse::Parse, Token};
+    use syn::{Expr, parse::Parse, Token, ExprAssign};
     use quote::quote;
     use syn::parse_macro_input;
 
     struct CLoop {
-        init: Expr,
+        init: ExprAssign,
         condinition: Expr,
         update_loop: Expr,
         update: Expr
@@ -50,7 +50,7 @@ pub fn c_loop(input: TokenStream) -> TokenStream {
 
     impl Parse for CLoop {
         fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
-            let init: Expr = input.parse()?;
+            let init: ExprAssign = input.parse()?;
             
             input.parse::<Token![;]>()?;
 
@@ -76,9 +76,8 @@ pub fn c_loop(input: TokenStream) -> TokenStream {
     let CLoop { init, condinition, update_loop, update } = parse_macro_input!(input as CLoop);
 
 
-
     TokenStream::from(quote! {
-        let #init;
+        let mut #init;
         '_c_loop_: loop {
             if #condinition {
                 break '_c_loop_;
